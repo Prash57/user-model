@@ -1,0 +1,10 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<h3>View Messages</h3>
+<br>
+<hr>
+<a href="{% url 'profile' message.sender.id %}">{{message.sender.username}}</a>
+<p>Created: {{message.created}}</p>
+<p>Message: {{message.body}}</p>
+{% endblock %}

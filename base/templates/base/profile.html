@@ -1,0 +1,32 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+
+<h3>Profile</h3> <br>
+<hr>
+<div>
+    {% if request.user == profile.user %}
+    <a href="{% url 'edit-account'%}">Edit</a>
+    <hr>
+    <a href="{% url 'delete-profile' profile.id %}">Delete</a>
+    <hr>
+    {% endif %}
+</div>
+<div>
+    {% if request.user.profile.id != profile.id %}
+    <a href="{% url 'create-message' profile.id %}">Send Message</a>
+    {% endif %}
+    <p>First Name: {{profile.first_name}}</p>
+    <p>Last Name: {{profile.last_name}}</p>
+    <p>Username: {{profile.username}}</p>
+    <p>Bio: {{profile.bio}}</p>
+    <p>Location: {{profile.location}}</p>
+    <p>Phone: {{profile.phone}}</p>
+    <p>Email: {{profile.email}}</p>
+    <p>Dob: {{profile.dob}}</p>
+    <p>Gender: {{profile.gender}}</p>
+    <p>Photo: Your Photo</p>
+    <img src="{{profile.imageURL}}" alt="">
+</div>
+{% endblock %}

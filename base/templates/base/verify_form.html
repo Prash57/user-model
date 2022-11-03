@@ -1,0 +1,22 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block content %}
+<h3>Verify Account</h3>
+<hr><br>
+<a href="{% url 'account' %}">Back</a>
+<div>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for field in form %}
+        <label for="">{{field.label}}</label>
+        {{field}}
+        {% endfor %}
+        <input type="submit" value="submit">
+
+    </form>
+</div>
+
+
+{% endblock %}

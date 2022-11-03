@@ -1,0 +1,29 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+
+<h3>Register an Account</h3>
+
+<form action="{% url 'register' %}" method="post">
+    {% csrf_token %}
+    {% for field in form %}
+    <div>
+        <label for="">{{field.label}}</label>
+        {{field}}
+
+        {% for error in field.errors %}
+        <p style="color:red">{{error}}</p>
+        {% endfor %}
+    </div>
+    {% endfor %}
+    <div>
+        <input type="submit" value="Sign In">
+    </div>
+</form>
+
+<div>
+    <p>Already registered?</p>
+    <a href="{% url 'login' %}">Log In</a>
+</div>
+{% endblock %}

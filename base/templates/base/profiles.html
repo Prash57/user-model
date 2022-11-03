@@ -1,0 +1,18 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+<h3>Profiles list</h3>
+<br>
+<hr>
+
+<div>
+    {% for profile in profiles %}
+   <div style="border: 1px solid; margin-bottom: 5px;">
+    <a href="{% url 'profile' profile.id %}">Username: {{profile.username}}</a>
+    <p>Bio: {{profile.bio}}</p>
+    <p>Location: {{profile.location}}</p>
+   </div>
+    {% endfor %}
+</div>
+{% endblock %}
