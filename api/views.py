@@ -32,11 +32,16 @@ def getProfile(request, pk):
 
 @api_view(['POST'])
 def editProfile(request, pk):
-    profiles = Profile.objects.get(id=pk)
-    serializer = ProfileSerializer(profiles, data=request.data)
+    serializer = ProfileSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
     return Response(serializer.data)
+
+@api_view(['DELETE'])
+def deleteProfile(request, pk):
+    profile = Profile.objects.get(id=pk)
+    profile.delete()
+    return Response(status=status.HTTP_204_NO_CONTENT)
 
 @api_view(['GET'])
 # @permission_classes([IsAuthenticated])

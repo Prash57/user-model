@@ -14,6 +14,8 @@ urlpatterns = [
     path('profiles/', views.getProfiles),
     path('profiles/<str:pk>/', views.getProfile),
     path('edit-profile/<str:pk>/', views.editProfile),
+    path('delete-profile/<str:pk>/', views.deleteProfile),
+
 
     path('inbox/', views.getInbox),
     path('inbox/<str:pk>/', views.viewMessage),
