@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
 from .forms import CustomUserCreationForm, ProfileForm, MessageForm, IdentificationForm
-from .models import Profile, Tag
+from .models import Profile
 # Create your views here.
 
 
@@ -170,3 +170,4 @@ def verifyUser(request):
 
     context = {'form': form, 'profile': profile}
     return render(request, 'base/verify_form.html', context)
+

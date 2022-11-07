@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 import uuid
-
+import pathlib
+from datetime import datetime
 # Create your models here.
 
 GENDER_TYPE = (
@@ -10,12 +11,26 @@ GENDER_TYPE = (
     ('Others', 'Others'),
 )
 
-
 GROUP_TYPE = (
     ('Social', 'Social'),
     ('Professional', 'Professional'),
     ('Community', 'Community'),
 )
+
+
+# for profiles image renaming
+def profile_rename_upload(instance, filename):
+    fpath = pathlib.Path(filename)
+    # new_fname = str(datetime.now().strftime("%Y%m%d-%H%M%S"))
+    new_fname = str(datetime.now())
+    return f"profiles_img/{new_fname}{fpath.suffix}"
+
+# for aadhar images renaming
+def aadhar_rename_upload(instance, filename):
+    fpath = pathlib.Path(filename)
+    # new_fname = str(datetime.now().strftime("%Y%m%d-%H%M%S"))
+    new_fname = str(datetime.now())
+    return f"aadhar_img/{new_fname}{fpath.suffix}"
 
 
 class Profile(models.Model):
@@ -29,7 +44,7 @@ class Profile(models.Model):
     bio = models.CharField(max_length=300, blank=True, null=True)
     location = models.CharField(max_length=100, blank=True, null=True)
     profile_image = models.ImageField(
-        blank=True, null=True, default=None, upload_to='profiles/')
+        blank=True, null=True, default=None, upload_to=profile_rename_upload)
     phone = models.IntegerField(blank=True, null=True)
     email = models.EmailField(max_length=55, blank=True, null=True)
     dob = models.DateField(null=True, blank=True)
@@ -66,14 +81,14 @@ class Message(models.Model):
         ordering = ['is_read', '-created']
 
 
-class Tag(models.Model):
-    id = models.UUIDField(default=uuid.uuid4, unique=True,
-                          primary_key=True, editable=False)
-    name = models.CharField(max_length=100)
-    created = models.DateTimeField(auto_now_add=True)
+# class Tag(models.Model):
+#     id = models.UUIDField(default=uuid.uuid4, unique=True,
+#                           primary_key=True, editable=False)
+#     name = models.CharField(max_length=100)
+#     created = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
 
 
 class Group(models.Model):
@@ -92,8 +107,7 @@ class Identification(models.Model):
         Profile, on_delete=models.CASCADE, null=True, blank=True)
     aadhar = models.IntegerField(null=True, blank=True)
     aadhar_image = models.ImageField(
-        blank=True, null=True, default=None, upload_to='aadhar_images/')
-    tags = models.ManyToManyField('Tag', blank=True)
+        blank=True, null=True, default=None, upload_to=aadhar_rename_upload)
 
     def __str__(self):
         return str(self.aadhar)
