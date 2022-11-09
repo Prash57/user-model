@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Profile, Message, Identification
+from .models import Profile, Message, Identification, Group
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -41,3 +41,11 @@ class IdentificationForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(IdentificationForm, self).__init__(*args, **kwargs)
+
+class GroupForm(ModelForm):
+    class Meta:
+        model = Group
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(GroupForm, self).__init__(*args, **kwargs)

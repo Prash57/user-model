@@ -13,6 +13,7 @@ def getRoutes(request):
         {'GET': '/api/profiles'},
         {'GET': '/api/inbox'},
         {'GET': '/api/verify'},
+        {'POST': '/api/edit-profile/<str:pk>/'}
     ]
     return Response(routes)
 
@@ -32,7 +33,8 @@ def getProfile(request, pk):
 
 @api_view(['POST'])
 def editProfile(request, pk):
-    serializer = ProfileSerializer(data=request.data)
+    profile = Profile.objects.get(id=pk)
+    serializer = ProfileSerializer(instance=profile, data=request.data)
     if serializer.is_valid():
         serializer.save()
     return Response(serializer.data)

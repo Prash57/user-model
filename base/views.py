@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
-from .forms import CustomUserCreationForm, ProfileForm, MessageForm, IdentificationForm
-from .models import Profile
+from .forms import CustomUserCreationForm, ProfileForm, MessageForm, IdentificationForm, GroupForm
+from .models import Profile, Group
 # Create your views here.
 
 
@@ -116,6 +116,31 @@ def inbox(request):
 
     context = {'messageRequests': messageRequests, 'unreadCount': unreadCount}
     return render(request, 'base/inbox.html', context)
+
+def social(request):
+    return render(request, 'base/social.html')
+
+def professional(request):
+    return render(request, 'base/professional.html')
+
+def community(request):
+    return render(request, 'base/community.html')
+
+def groups(request):
+    group = Group.objects.all()
+    form = GroupForm()
+    if request.method == 'POST':
+        form = GroupForm(request.POST)
+        if form.is_valid():
+            if social:
+                return redirect('social')
+            if professional:
+                return redirect('professional')
+            if community:
+                return redirect('communtiy')
+
+    context = {'group': group, 'form': form}
+    return render(request, 'base/groups.html', context)
 
 
 def viewMessage(request, pk):

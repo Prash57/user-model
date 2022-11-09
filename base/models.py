@@ -94,10 +94,10 @@ class Message(models.Model):
 class Group(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True,
                           primary_key=True, editable=False)
-    group = models.CharField(choices=GROUP_TYPE ,max_length=15)
+    name = models.CharField(choices=GROUP_TYPE ,max_length=15)
 
     def __str__(self):
-        return self.group
+        return self.name
 
 
 class Identification(models.Model):
