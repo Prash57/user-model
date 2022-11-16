@@ -26,6 +26,8 @@ def profile_rename_upload(instance, filename):
     return f"profiles_img/{new_fname}{fpath.suffix}"
 
 # for aadhar images renaming
+
+
 def aadhar_rename_upload(instance, filename):
     fpath = pathlib.Path(filename)
     # new_fname = str(datetime.now().strftime("%Y%m%d-%H%M%S"))
@@ -81,20 +83,10 @@ class Message(models.Model):
         ordering = ['is_read', '-created']
 
 
-# class Tag(models.Model):
-#     id = models.UUIDField(default=uuid.uuid4, unique=True,
-#                           primary_key=True, editable=False)
-#     name = models.CharField(max_length=100)
-#     created = models.DateTimeField(auto_now_add=True)
-
-#     def __str__(self):
-#         return self.name
-
-
 class Group(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True,
                           primary_key=True, editable=False)
-    name = models.CharField(choices=GROUP_TYPE ,max_length=15)
+    name = models.CharField(choices=GROUP_TYPE, max_length=15)
 
     def __str__(self):
         return self.name

@@ -4,6 +4,9 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
 from .forms import CustomUserCreationForm, ProfileForm, MessageForm, IdentificationForm, GroupForm
 from .models import Profile, Group
+from community.views import com_home
+from social.views import soc_home
+
 # Create your views here.
 
 
@@ -117,31 +120,6 @@ def inbox(request):
     context = {'messageRequests': messageRequests, 'unreadCount': unreadCount}
     return render(request, 'base/inbox.html', context)
 
-def social(request):
-    return render(request, 'base/social.html')
-
-def professional(request):
-    return render(request, 'base/professional.html')
-
-def community(request):
-    return render(request, 'base/community.html')
-
-def groups(request):
-    group = Group.objects.all()
-    form = GroupForm()
-    if request.method == 'POST':
-        form = GroupForm(request.POST)
-        if form.is_valid():
-            if social:
-                return redirect('social')
-            if professional:
-                return redirect('professional')
-            if community:
-                return redirect('communtiy')
-
-    context = {'group': group, 'form': form}
-    return render(request, 'base/groups.html', context)
-
 
 def viewMessage(request, pk):
     profile = request.user.profile
@@ -196,3 +174,19 @@ def verifyUser(request):
     context = {'form': form, 'profile': profile}
     return render(request, 'base/verify_form.html', context)
 
+
+def groups(request):
+    group = Group.objects.all()
+    form = GroupForm()
+    if request.method == 'POST':
+        form = GroupForm(request.POST)
+        if form.is_valid():
+            if 'community':
+                return com_home(request)
+            elif 'social':
+                return soc_home(request)
+            else:
+                return redirect('...')
+
+    context = {'group': group, 'form': form}
+    return render(request, 'base/groups.html', context)

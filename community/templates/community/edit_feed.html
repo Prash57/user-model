@@ -1,0 +1,16 @@
+<h3>Edit Post</h3>
+<br>
+<hr>
+<!-- <a href="/">Back</a> -->
+<button onclick="history.back()">Go Back</button>
+<div>
+    <form action="" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <label for="">{{field.label}}</label>
+        {{field}}
+        {% endfor %}
+
+        <input type="submit" value="Submit">
+    </form>
+</div>

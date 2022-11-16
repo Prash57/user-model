@@ -1,6 +1,7 @@
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.parsers import JSONParser
 from .serializers import *
 from base.models import *
 from base.forms import MessageForm
@@ -33,11 +34,13 @@ def getProfile(request, pk):
 
 @api_view(['POST'])
 def editProfile(request, pk):
+    # data = JSONParser().parse(request)
     profile = Profile.objects.get(id=pk)
     serializer = ProfileSerializer(instance=profile, data=request.data)
     if serializer.is_valid():
         serializer.save()
-    return Response(serializer.data)
+        # return Response(serializer.data, status=201)
+    return Response(serializer.data, status=400)
 
 @api_view(['DELETE'])
 def deleteProfile(request, pk):

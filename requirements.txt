@@ -1,5 +1,7 @@
-pip install django
-pip install whitenoise
-pip install Pillow==2.2.1
-pip install djangorestframework
-pip install jwt
+django
+whitenoise
+Pillow
+djangorestframework
+jwt
+djangorestframework-simplejwt
+djangorestframework-jwt

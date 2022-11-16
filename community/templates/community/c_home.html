@@ -1,0 +1,45 @@
+<style>
+    .container {
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+    }
+</style>
+
+<h1>Hello Community</h1>
+<br>
+<div>
+    <a href="{% url 'add-post' %}">Add Post</a><br>
+</div>
+<div>
+    <a href="#">Create community</a><br>
+</div>
+
+<h3>feeds</h3>
+<hr>
+<br>
+{% for feed in feeds %}
+<hr>
+<div class="container">
+    <div class="img">
+        <img src="{{feed.user.imageURL}}" alt="" width="200px">
+    </div>
+    <div class="feed">
+        {% if user.profile == feed.user %}
+        <a href="{% url 'edit-post' feed.id %}">Edit</a> --
+        <a href="{% url 'delete-post' feed.id %}">Delete</a><br>
+        {% endif %}
+
+        <p>posted: {{feed.time |timesince}} ago</p>
+        <a href="{% url 'profile' feed.user.id %}">
+            <p>user: {{feed.user}}</p>
+        </a>
+        <p>post: {{feed}}</p>
+
+        {% for tag in feed.tags.all %}
+        #{{tag}}
+        {% endfor %}
+    </div>
+</div>
+<hr>
+<br>
+{% endfor %}
